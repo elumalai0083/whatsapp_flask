@@ -1,3 +1,6 @@
+import eventlet
+eventlet.monkey_patch()
+
 from flask import Flask, render_template, request, redirect, session
 from flask_socketio import SocketIO, emit, join_room
 from functools import wraps
@@ -9,7 +12,8 @@ import sqlite3, os
 # -----------------------------
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "123"
-socketio = SocketIO(app, cors_allowed_origins="*")
+
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet")
 
 UPLOAD_FOLDER = "static/files"
 if not os.path.exists(UPLOAD_FOLDER):
@@ -20,7 +24,7 @@ if not os.path.exists(UPLOAD_FOLDER):
 # DATABASE CONNECT
 # -----------------------------
 def get_db():
-    conn = sqlite3.connect("chat.db")
+    conn = sqlite3.connect("chat.db", check_same_thread=False)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -159,7 +163,6 @@ def users():
 
     for u in persons:
 
-        # friend request status
         c.execute("""
         SELECT sender,receiver,status FROM friend_requests
         WHERE (sender=? AND receiver=?)
@@ -231,7 +234,6 @@ def chat(friend):
     db = get_db()
     c = db.cursor()
 
-    # mark read
     c.execute("""
     UPDATE private_messages SET read=1
     WHERE sender=? AND receiver=?""",
@@ -305,7 +307,7 @@ def upload(friend):
 
 
 # -----------------------------
-# ONLINE / OFFLINE EVENTS
+# ONLINE / OFFLINE
 # -----------------------------
 @socketio.on("connect")
 def online():
@@ -335,6 +337,8 @@ def offline():
         db.close()
 
 
+# -----------------------------
+# RENDER SERVER START
 # -----------------------------
 if __name__ == "__main__":
     from os import environ
