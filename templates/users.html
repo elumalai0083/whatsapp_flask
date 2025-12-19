@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Users</title>
+<link rel="stylesheet" href="/static/style.css">
+
+<style>
+.users-box{
+    width:850px;
+    margin:auto;
+    margin-top:120px;
+    background:rgba(255,255,255,0.07);
+    border-radius:25px;
+    padding:25px;
+    backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,0.25);
+}
+
+.user-row{
+    background:rgba(255,255,255,0.10);
+    margin:12px 0;
+    padding:16px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:.2s;
+}
+
+.user-row:hover{
+    transform:scale(1.02);
+}
+
+.user-img{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid white;
+    margin-right:15px;
+}
+
+.button{
+    padding:10px 15px;
+    font-size:16px;
+    border-radius:10px;
+    font-weight:bold;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+.add{background:cyan;color:black;}
+.chat{background:#00ff73;color:black;}
+.incoming{background:yellow;color:black;}
+.pending{background:gray;color:white;}
+</style>
+
+</head>
+<body>
+
+<h1 style="text-align:center;margin-top:35px;">👤 All Users</h1>
+
+<div class="users-box">
+
+{% for u in friends %}
+
+<div class="user-row">
+
+    <div style="display:flex;align-items:center;">
+        <img src="/static/profile/{{u['image']}}" class="user-img">
+        <p style="font-size:22px;">{{u['name']}}</p>
+
+        {% if u['online']=="online" %}
+            <span style="color:lime;font-size:13px;margin-left:10px;">● online</span>
+        {% else %}
+            <span style="color:gray;font-size:13px;margin-left:10px;">● offline</span>
+        {% endif %}
+    </div>
+
+    <div>
+
+        {% if u['status']=="none" %}
+            <a href="/send/{{u['name']}}" class="button add">Add Friend</a>
+
+        {% elif u['status']=="sent" %}
+            <span class="button pending">Pending</span>
+
+        {% elif u['status']=="incoming" %}
+            <a href="/accept/{{u['name']}}" class="button incoming">Accept</a>
+
+        {% elif u['status']=="friends" %}
+            <a href="/chat/{{u['name']}}" class="button chat">Chat</a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

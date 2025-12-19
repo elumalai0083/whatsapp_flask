@@ -1,0 +1,159 @@
+body {
+    margin:0;
+    padding:0;
+    height:100vh;
+    width:100vw;
+    background-image:url("/static/image.png");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family: Poppins, sans-serif;
+    color:white;
+}
+
+body::before {
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,70,0.55);
+    backdrop-filter:blur(5px);
+    z-index:-1;
+}
+
+.top-bar{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:70px;
+    background:rgba(0,0,90,.6);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 30px;
+}
+
+.user-info{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid white;
+}
+
+.logout{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    background:red;
+    padding:8px 14px;
+    border-radius:10px;
+}
+
+.chat-box {
+    width:850px;
+    background:rgba(0,0,0,0.50);
+    padding:25px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 0 35px black;
+    margin-top:60px;
+}
+
+h1 {
+    font-size:50px;
+    margin-bottom:5px;
+}
+
+.sub {
+    color: cyan;
+    margin-bottom:15px;
+    font-size:20px;
+}
+
+.message-area {
+    width:100%;
+    height:350px;
+    overflow-y:auto;
+    padding:15px;
+    background:rgba(255,255,255,0.08);
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,0.4);
+}
+
+.msg {
+    max-width:70%;
+    padding:12px;
+    margin:12px;
+    border-radius:18px;
+    position:relative;
+    animation: pop .2s linear;
+}
+
+.msg.me {
+    background: linear-gradient(45deg, #0078ff, #00eaff);
+    color:white;
+    margin-left:auto;
+    border-bottom-right-radius:0;
+}
+
+.msg.other {
+    background:rgba(255,255,255,0.85);
+    color:black;
+    margin-right:auto;
+    border-bottom-left-radius:0;
+}
+
+.text {
+    font-size:18px;
+    margin:5px 0;
+}
+
+.time {
+    font-size:12px;
+    opacity:0.8;
+    display:block;
+    text-align:right;
+}
+
+.username {
+    font-size:12px;
+    opacity:0.7;
+}
+
+.send-box{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
+
+input {
+    width:70%;
+    padding:15px;
+    border-radius:12px;
+    border:0;
+    background:rgba(255,255,255,0.25);
+    color:white;
+    font-size:18px;
+}
+
+button {
+    width:160px;
+    font-size:20px;
+    border:0;
+    border-radius:12px;
+    background:linear-gradient(45deg,#0078ff,#00eaff);
+    color:white;
+    cursor:pointer;
+}

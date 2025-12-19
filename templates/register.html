@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins';
+        }
+
+        body{
+            height:100vh;
+            width:100%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(160deg,#001f3f,#0074D9,#4DA7FF);
+            overflow:hidden;
+        }
+
+        .box{
+            width:420px;
+            background:rgba(255,255,255,0.15);
+            padding:35px;
+            border-radius:20px;
+            backdrop-filter:blur(15px);
+            border:1px solid rgba(255,255,255,0.3);
+            box-shadow:0 0 25px rgba(0,0,0,0.3);
+        }
+
+        h2{
+            text-align:center;
+            color:white;
+            margin-bottom:25px;
+            font-weight:600;
+            font-size:29px;
+        }
+
+        input{
+            width:100%;
+            padding:14px;
+            margin:10px 0;
+            border:0;
+            border-radius:12px;
+            font-size:16px;
+            outline:none;
+        }
+
+        input[type="file"]{
+            background:white;
+            cursor:pointer;
+        }
+
+        .btn{
+            background:linear-gradient(45deg,#007bff,#00d2ff);
+            color:white;
+            font-size:19px;
+            padding:14px;
+            border:0;
+            margin-top:10px;
+            width:100%;
+            border-radius:14px;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        .btn:hover{
+            transform:scale(1.05);
+        }
+
+        .back{
+            margin-top:20px;
+            display:block;
+            font-size:15px;
+            text-align:center;
+            color:white;
+            opacity:.8;
+            text-decoration:none;
+        }
+
+        .back:hover{
+            opacity:1;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <form class="box" method="POST" enctype="multipart/form-data">
+
+        <h2>🔐 Create Account</h2>
+
+        <input type="text" name="phone" placeholder="Mobile Number" required>
+
+        <input type="text" name="name" placeholder="Your Name" required>
+
+        <input type="password" name="password" placeholder="Password" required>
+
+        <input type="file" name="image" accept="image/*" required>
+
+        <button class="btn" type="submit">Register</button>
+
+        <a class="back" href="/">⬅ Go Back</a>
+
+    </form>
+
+</body>
+</html>

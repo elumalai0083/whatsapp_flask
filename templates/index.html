@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ultra Blue Chat</title>
+
+<link rel="stylesheet" href="/static/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+
+<style>
+/* improves button visibility */
+.user-btn-new:hover{
+    transform:scale(1.05);
+}
+</style>
+
+</head>
+<body>
+
+<!-- USERS BUTTON LOWERED DOWN & STYLED -->
+<a href="/users" 
+class="user-btn-new"
+style="
+position:absolute;
+top:209px;
+left:140px;
+background:cyan;
+padding:12px 20px;
+border-radius:12px;
+color:black;
+text-decoration:none;
+font-weight:bold;">
+👤 Users
+</a>
+
+
+<!-- TOP BAR -->
+<div class="top-bar">
+
+    <!-- USER INFO -->
+    <div class="user-info" style="margin-left:140px;">
+        <img src="/static/profile/{{session['image']}}" class="avatar">
+        <span class="welcome">Hi, {{session['name']}}</span>
+    </div>
+
+    <!-- LOGOUT -->
+    <a href="/logout" class="logout"
+    style="margin-right:140px;">
+        Logout
+    </a>
+
+</div>
+
+
+<!-- CHAT BOX -->
+<div class="chat-box">
+
+    <h1>🔥 REAL TIME CHAT 🔥</h1>
+    <p class="sub">Ultra Fast • Cool UI • Powered by <b>{{session['name']}}</b></p>
+
+    
+    <div id="messages" class="message-area">
+
+        {% for u, m, t in history %}
+
+        {% if u == session['name'] %}
+        <div class="msg me">
+            <p class="text">{{m}}</p>
+            <span class="time">{{t}}</span>
+        </div>
+
+        {% else %}
+        <div class="msg other">
+            <span class="username">{{u}}</span>
+            <p class="text">{{m}}</p>
+            <span class="time">{{t}}</span>
+        </div>
+
+        {% endif %}
+        {% endfor %}
+        
+    </div>
+
+
+    <div class="send-box">
+        <input id="msg" placeholder="Type Message...">
+        <button id="send" style="cursor:pointer;">Send</button>
+    </div>
+
+</div>
+
+
+<script>
+
+var socket = io();
+
+/* SEND MESSAGE */
+document.getElementById("send").onclick = function(){
+
+    let m = msg.value.trim();
+    if(m == "") return;
+
+    socket.emit("message_send", {
+        user:"{{session['name']}}",
+        message:m
+    });
+
+    msg.value = "";
+};
+
+
+/* RECEIVE MESSAGE */
+socket.on("message_receive", function(data){
+
+    let box = document.getElementById("messages");
+
+    let type = (data.user == "{{session['name']}}") ? "me" : "other";
+
+    box.innerHTML += `
+        <div class="msg ${type}">
+            <p class="text">${data.message}</p>
+            <span class="time">${data.time}</span>
+        </div>
+    `;
+
+    box.scrollTop = box.scrollHeight;
+});
+
+</script>
+
+</body>
+</html>
