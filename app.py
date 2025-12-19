@@ -338,9 +338,7 @@ def offline():
 
 
 # -----------------------------
-from os import environ
-port = int(environ.get("PORT", 5000))
-
-def run():
-    socketio.run(app, host="0.0.0.0", port=port)
-
+# comment out socketio.run for production
+pass
+if __name__ == "__main__":
+    socketio.run(app, debug=True)
